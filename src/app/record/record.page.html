@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      سجل جديد
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12">
+        <ion-searchbar animated [(ngModel)]="searchTerm" (ionChange)="getFilterd()"></ion-searchbar>
+        <ion-card *ngIf="searchEnabled">
+ 
+          <ion-card-content *ngFor="let item of filteredRecords">
+          <ion-item (click)="selectCustomer(item._id, item.Name)">
+            <ion-label>{{item.Name}}</ion-label>
+          </ion-item>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+  </ion-grid>
+</ion-content>

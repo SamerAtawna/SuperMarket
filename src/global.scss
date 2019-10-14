@@ -24,3 +24,15 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+ion-content{
+    direction: rtl;
+    font-family: 'Almarai';
+}
+ion-toolbar{
+    direction: rtl;
+    font-family: 'Almarai';
+}
+ion-label{
+    font-family: 'Almarai' !important;
+}
+@import url('https://fonts.googleapis.com/css?family=Almarai&display=swap');
