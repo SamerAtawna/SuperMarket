@@ -19,7 +19,7 @@
         ></ion-searchbar>
         <ion-card *ngIf="searchEnabled">
           <ion-card-content *ngFor="let item of filteredRecords">
-            <ion-item (click)="selectCustomer(item._id, item.Name)">
+            <ion-item (click)="selectCustomer(item.UserID, item.Name)">
               <ion-label>{{ item.Name }}</ion-label>
             </ion-item>
           </ion-card-content>

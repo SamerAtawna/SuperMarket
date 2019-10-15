@@ -15,7 +15,7 @@
   <ion-list *ngFor="let record of records">
     <ion-item>
       <ion-label>{{record.Name}}</ion-label>
-      <p slot="end">{{record.Payments | sumit}}</p>
+      <p slot="end">{{record.Amount | sumit}}</p>
     </ion-item>
 
   </ion-list>

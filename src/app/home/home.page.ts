@@ -1,15 +1,15 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
-import { LoadingController } from "@ionic/angular";
-import { DataService } from "../data.service";
-import { IonInfiniteScroll } from "@ionic/angular";
-import { Record } from "../record";
-import { Observable } from "rxjs";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { LoadingController } from '@ionic/angular';
+import { DataService } from '../data.service';
+import { IonInfiniteScroll } from '@ionic/angular';
+import { Record } from '../record';
+import { Observable } from 'rxjs';
 
 
 @Component({
-  selector: "app-home",
-  templateUrl: "home.page.html",
-  styleUrls: ["home.page.scss"]
+  selector: 'app-home',
+  templateUrl: 'home.page.html',
+  styleUrls: ['home.page.scss']
 })
 export class HomePage implements OnInit {
   records;
@@ -25,8 +25,8 @@ export class HomePage implements OnInit {
     });
   }
 
-  getData(){
-    this.presentLoading("...جاري التحميل")
+  getData() {
+    this.presentLoading('...جاري التحميل')
     .then(async () => {
       await this.getRecord();
     })
