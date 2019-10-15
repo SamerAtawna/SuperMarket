@@ -13,6 +13,12 @@ export class RecordPage implements OnInit {
   records;
   filteredRecords;
   searchEnabled = false;
+  showInput = false;
+  sum = '';
+  selectedUser = {
+    _id: '',
+    Name: ''
+  };
   constructor(private data: DataService, private loading: LoadingController) {}
 
   ngOnInit() {
@@ -40,8 +46,17 @@ export class RecordPage implements OnInit {
     });
   }
 
-  selectCustomer(id, name){
-console.log(id, name);
+  selectCustomer(id, name) {
+    this.selectedUser.Name = name;
+    this.selectedUser._id = id;
+    this.showInput = true;
+    this.searchEnabled = false;
+  }
+  addValue(val) {
+    val === 10 ? (this.sum = '') : (this.sum += val);
+  }
+  addToAccount() {
+
   }
 
   async presentLoading(msg) {

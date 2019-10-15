@@ -12,17 +12,59 @@
   <ion-grid fixed>
     <ion-row>
       <ion-col size="12">
-        <ion-searchbar animated [(ngModel)]="searchTerm" (ionChange)="getFilterd()"></ion-searchbar>
+        <ion-searchbar
+          animated
+          [(ngModel)]="searchTerm"
+          (ionChange)="getFilterd()"
+        ></ion-searchbar>
         <ion-card *ngIf="searchEnabled">
- 
           <ion-card-content *ngFor="let item of filteredRecords">
-          <ion-item (click)="selectCustomer(item._id, item.Name)">
-            <ion-label>{{item.Name}}</ion-label>
-          </ion-item>
+            <ion-item (click)="selectCustomer(item._id, item.Name)">
+              <ion-label>{{ item.Name }}</ion-label>
+            </ion-item>
           </ion-card-content>
         </ion-card>
       </ion-col>
-
+    </ion-row>
+    <ion-row *ngIf="showInput">
+      <ion-col size="12">
+        <ion-card>
+          <ion-card-header>
+            <ion-card-title>{{ selectedUser.Name }}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content justify-content-center class="ion-text-center" >
+            {{sum}}
+            <table class="ion-text-center">
+              <tr>
+                <td><ion-button color="light" (click)="addValue(1)">1</ion-button></td>
+                <td><ion-button color="light" (click)="addValue(2)">2</ion-button></td>
+                <td><ion-button color="light" (click)="addValue(3)">3</ion-button></td>
+              </tr>
+              <tr>
+                <td><ion-button color="light" (click)="addValue(4)">4</ion-button></td>
+                <td><ion-button color="light" (click)="addValue(5)">5</ion-button></td>
+                <td><ion-button color="light" (click)="addValue(6)">6</ion-button></td>
+              </tr>
+              <tr>
+                <td><ion-button color="light" (click)="addValue(7)">7</ion-button></td>
+                <td><ion-button color="light" (click)="addValue(8)">8</ion-button></td>
+                <td><ion-button color="light" (click)="addValue(9)">9</ion-button></td>
+              </tr>
+              <tr>
+                <td></td>
+                <td><ion-button color="light" (click)="addValue(0)">0</ion-button></td>
+            
+              </tr>
+              <tr>
+                  <td colspan="3"><ion-button  class='paybtn' color="danger" (click)="addValue(10)">حذف</ion-button></td>
+              </tr>
+              <tr>
+                  <td  colspan="3"><ion-button  class='paybtn' (click)="addToAccount()">اضافة</ion-button></td>
+              </tr>
+            </table>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
     </ion-row>
   </ion-grid>
 </ion-content>
