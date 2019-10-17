@@ -50,7 +50,7 @@ export class DataService {
   }
 
   checkLogin(){
-    return this.http.get(`http://localhost:3000/passcheck`);
+    return this.http.get(`https://super-market-abu-malk.herokuapp.com/passcheck`);
 
   }
 
