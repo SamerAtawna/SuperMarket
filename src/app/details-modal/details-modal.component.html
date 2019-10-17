@@ -19,7 +19,7 @@
       <tr *ngFor="let item of userDataArr2">
         <td class="wdFixed">{{item.Date | dateonly}}</td>
         <td class='flx'>
-          <div *ngFor="let item1 of item.Amount" [ngClass]="{'grn': item1 < 0}">
+          <div *ngFor="let item1 of item.Amount" class='dv' [ngClass]="{'grn': item1 < 0}">
               {{item1}}
           </div> 
      

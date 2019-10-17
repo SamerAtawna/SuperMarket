@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { DataService } from '../data.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
+import { MenuController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -14,7 +15,8 @@ export class LoginPage implements OnInit {
     private data: DataService,
     private loading: LoadingController,
     private alertController: AlertController,
-    private router: Router
+    private router: Router,
+    private menuCtrl: MenuController,
   ) {}
 
   ngOnInit() {
@@ -60,5 +62,11 @@ export class LoginPage implements OnInit {
         this.loading.dismiss();
       });
     });
+  }
+  ionViewWillEnter() {
+    this.menuCtrl.enable(false);
+  }
+  ionViewWillLeave() {
+    this.menuCtrl.enable(true);
   }
 }
