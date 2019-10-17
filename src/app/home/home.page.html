@@ -13,9 +13,10 @@
 
 <ion-content>
   <ion-list *ngFor="let record of records">
-    <ion-item>
+    <ion-item (click)="presentModal(record.UserID, record.Name)">
       <ion-label>{{record.Name}}</ion-label>
-      <p slot="end">{{record.Amount | sumit}}</p>
+      <p slot="end" *ngIf="record.Amount !== null">{{record.Amount | sumit}}</p>
+      <p slot="end" *ngIf="record.Amount === null">0</p>
     </ion-item>
 
   </ion-list>

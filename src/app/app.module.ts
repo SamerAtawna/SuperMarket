@@ -1,3 +1,4 @@
+import { DetailsModalComponent } from './details-modal/details-modal.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -11,8 +12,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
-  declarations: [AppComponent],
-  entryComponents: [],
+  declarations: [AppComponent , DetailsModalComponent],
+  entryComponents: [DetailsModalComponent],
   exports: [],
   imports: [
     BrowserModule,

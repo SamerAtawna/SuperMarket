@@ -1,5 +1,6 @@
+import { DetailsModalComponent } from './../details-modal/details-modal.component';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { LoadingController } from '@ionic/angular';
+import { LoadingController, ModalController } from '@ionic/angular';
 import { DataService } from '../data.service';
 import { IonInfiniteScroll } from '@ionic/angular';
 import { Record } from '../record';
@@ -13,8 +14,12 @@ import { Observable } from 'rxjs';
 })
 export class HomePage implements OnInit {
   records;
+  selectedUser = {
+    Name: '',
+    Id: 0
+  }
 
-  constructor(private data: DataService, private loading: LoadingController) {}
+  constructor(private data: DataService, private loading: LoadingController, private modalController: ModalController) {}
   getRecord() {
     return new Promise((resolve, rej) => {
       return this.data.getRecords().subscribe(res => {
@@ -44,4 +49,14 @@ export class HomePage implements OnInit {
     });
     await loading.present();
   }
+  async presentModal(id, name) {
+    this.selectedUser.Id = id;
+    this.selectedUser.Name = name;
+    this.data.selectedCustObj.next(this.selectedUser);
+    const modal = await this.modalController.create({
+      component: DetailsModalComponent
+    });
+    return await modal.present();
+  }
+
 }

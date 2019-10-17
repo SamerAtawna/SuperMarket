@@ -10,6 +10,7 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
+  imageUrl = '../assets/AbuMalk.PNG';
   public appPages = [
     {
       title: 'حسابات',
@@ -25,6 +26,11 @@ export class AppComponent {
       title: 'سجل جديد',
       url: '/record',
       icon: 'md-create'
+    },
+    {
+      title: ' استلام مبلغ',
+      url: '/refund',
+      icon: 'md-cash'
     }
   ];
 

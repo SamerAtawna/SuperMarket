@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>
+      تسديد
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-grid fixed>
+  <ion-row>
+    <ion-col size="12">
+      <ion-searchbar
+        dir="rtl"
+        animated
+        [(ngModel)]="searchTerm"
+        (ionChange)="getFilterd()"
+      ></ion-searchbar>
+      <ion-card *ngIf="searchEnabled">
+        <ion-card-content *ngFor="let item of filteredRecords" dir="rtl">
+          <ion-item (click)="selectCustomer(item.UserID, item.Name)">
+            <ion-label>{{ item.Name }}</ion-label>
+          </ion-item>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ion-row dir="rtl" *ngIf="showInput">
+    <ion-col size="12">
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title>{{ selectedUser.Name }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content class="ion-text-center">
+          <ion-input
+            type="text"
+            placeholder="0"
+            class="ion-text-center"
+            [(ngModel)]="amount"
+          ></ion-input>
+          <ion-button (click)="refundCust()">
+            موافق
+          </ion-button>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
