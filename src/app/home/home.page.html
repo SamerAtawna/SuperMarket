@@ -12,7 +12,12 @@
 
 
 <ion-content>
-  <ion-list *ngFor="let record of records">
+    <ion-searchbar
+    animated
+    [(ngModel)]="searchTerm"
+    (ionChange)="getFilterd()"
+  ></ion-searchbar>
+  <ion-list *ngFor="let record of filteredRecords">
     <ion-item (click)="presentModal(record.UserID, record.Name)">
       <ion-label>{{record.Name}}</ion-label>
       <p slot="end" *ngIf="record.Amount !== null">{{record.Amount | sumit}}</p>

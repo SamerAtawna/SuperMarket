@@ -1,29 +1,36 @@
 <ion-header>
   <ion-toolbar>
-      <ion-buttons slot="start">
-       <ion-button color="--ion-color-primary-contrast" (click)="dismiss()">
+    <ion-buttons slot="start">
+      <ion-button color="--ion-color-primary-contrast" (click)="dismiss()">
         رجوع
-       </ion-button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
-<ion-content dir="ltr">
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
   <div class="container">
 
     <ion-title class="ion-text-center">{{customer.Name}}</ion-title>
-    <ul>
-      <li *ngFor="let item of userDataArr2">
-        <span></span>
-        <div>
-          <div class="info"><div *ngFor="let item1 of item.Amount"><span [ngClass]="{grn: item1 < 0}">{{item1}}</span></div></div>
-        </div>
-        <span class="number"
-          ><span>{{ item.Date | date }}</span> <span></span
-        ></span>
-      </li>
-    </ul>
+    <table *ngIf="!isLoading">
+      <tr>
+          <th>التاريخ</th>
+          <th>الدفع</th>
+      </tr>
+      <tr *ngFor="let item of userDataArr2">
+        <td class="wdFixed">{{item.Date | dateonly}}</td>
+        <td class='flx'>
+          <div *ngFor="let item1 of item.Amount" [ngClass]="{'grn': item1 < 0}">
+              {{item1}}
+          </div> 
+     
+        </td>
+      </tr>
+  
+
+    </table>
     <div class="isLoading" *ngIf="isLoading">
       يتم التحميل...
+      
     </div>
   </div>
 </ion-content>

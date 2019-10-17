@@ -44,4 +44,14 @@ export class DataService {
   getUserDetails(id){
     return this.http.get(`https://super-market-abu-malk.herokuapp.com/userdetails?id=${id}`);
   }
+
+  newCustomer(name) {
+    return this.http.get(`https://super-market-abu-malk.herokuapp.com/addcust?name=${name}`);
+  }
+
+  checkLogin(){
+    return this.http.get(`http://localhost:3000/passcheck`);
+
+  }
+
 }

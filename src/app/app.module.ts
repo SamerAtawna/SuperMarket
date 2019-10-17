@@ -10,9 +10,10 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
+import { DateonlyPipe } from './dateonly.pipe';
 
 @NgModule({
-  declarations: [AppComponent , DetailsModalComponent],
+  declarations: [AppComponent , DetailsModalComponent, DateonlyPipe],
   entryComponents: [DetailsModalComponent],
   exports: [],
   imports: [

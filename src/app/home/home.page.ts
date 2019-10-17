@@ -14,16 +14,28 @@ import { Observable } from 'rxjs';
 })
 export class HomePage implements OnInit {
   records;
+  searchTerm;
+  filteredRecords;
   selectedUser = {
     Name: '',
     Id: 0
   }
 
   constructor(private data: DataService, private loading: LoadingController, private modalController: ModalController) {}
+  getFilterd() {
+    console.log('search val ', this.searchTerm);
+    console.log('records ', this.records);
+
+    this.filteredRecords = this.records.filter(s => {
+      console.log(s);
+      return s.Name.includes(this.searchTerm);
+    });
+  }
   getRecord() {
     return new Promise((resolve, rej) => {
       return this.data.getRecords().subscribe(res => {
         console.log(res);
+        this.filteredRecords = res;
         this.records = res;
         resolve();
       });
