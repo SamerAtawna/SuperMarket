@@ -49,7 +49,7 @@ export class DataService {
     return this.http.get(`https://super-market-abu-malk.herokuapp.com/addcust?name=${name}`);
   }
 
-  checkLogin(){
+  checkLogin(uname, pass){
     return this.http.get(`https://super-market-abu-malk.herokuapp.com/passcheck`);
 
   }

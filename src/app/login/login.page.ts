@@ -11,6 +11,7 @@ import { MenuController } from '@ionic/angular';
 })
 export class LoginPage implements OnInit {
   pass;
+  uname;
   constructor(
     private data: DataService,
     private loading: LoadingController,
@@ -20,7 +21,7 @@ export class LoginPage implements OnInit {
   ) {}
 
   ngOnInit() {
-    if (localStorage.getItem('passcode') && !this.pass) {
+    if (localStorage.getItem('passcode') && !this.pass && localStorage.getItem('username')) {
       this.pass = localStorage.getItem('passcode');
       console.log('from localstorage');
     }
@@ -28,7 +29,7 @@ export class LoginPage implements OnInit {
   }
   checkPassCode() {
     return new Promise((res, rej) => {
-      this.data.checkLogin().subscribe(ps => {
+      this.data.checkLogin(this.uname, this.pass).subscribe(ps => {
         res(ps);
       });
     });
