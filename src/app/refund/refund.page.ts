@@ -63,6 +63,8 @@ export class RefundPage implements OnInit {
   }
 
   refundCust() {
+    console.log(this.amount)
+    if (this.amount === undefined ) {return}
     this.presentLoading("جاري الحفظ...").then(async () => {
       await this.data
         .refundCustomer(this.selectedUser._id, this.amount * -1)
