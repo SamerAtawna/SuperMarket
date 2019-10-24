@@ -16,16 +16,24 @@ export class DataService {
     Name: string;
     Id: number;
   };
+  store: {
+    Password: string;
+    StoreID: number;
+    StoreName: string;
+  };
   selectedCustObj = new BehaviorSubject(this.obj);
+  selectedStore = new BehaviorSubject(this.store);
   headers = new HttpHeaders({
     'Content-Type': 'application/json',
     'Access-Control-Allow-Headers': '*'
   });
-  apiLink = 'https://super-market-abu-malk.herokuapp.com/customers';
+  // apiLink = 'https://super-market-abu-malk.herokuapp.com/customers';
+  apiLink = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
-  getRecords(): Observable<Record> {
-    return this.http.get<Record>(this.apiLink);
+  getRecords(storeId): Observable<Record> {
+    console.log("storeid:(service) ", storeId );
+    return this.http.get<Record>(`${this.apiLink}/customers?id=${storeId}`);
   }
 
   castArray(obj) {
@@ -33,25 +41,25 @@ export class DataService {
   }
 
   addTransaction(id, sum) {
-    return this.http.get(`https://super-market-abu-malk.herokuapp.com/addamount?sum=${sum}&id=${id}`);
+    return this.http.get(`${this.apiLink}/addamount?sum=${sum}&id=${id}`);
   }
 
   async refundCustomer(id, sum) {
     console.log('amount', sum);
-    return this.http.get(`https://super-market-abu-malk.herokuapp.com/refund?sum=${sum}&id=${id}`);
+    return this.http.get(`${this.apiLink}/refund?sum=${sum}&id=${id}`);
   }
 
-  getUserDetails(id){
-    return this.http.get(`https://super-market-abu-malk.herokuapp.com/userdetails?id=${id}`);
+  getUserDetails(id) {
+    return this.http.get(`${this.apiLink}/userdetails?id=${id}`);
   }
 
   newCustomer(name) {
-    return this.http.get(`https://super-market-abu-malk.herokuapp.com/addcust?name=${name}`);
+    return this.http.get(`${this.apiLink}/addcust?name=${name}`);
   }
 
-  checkLogin(uname, pass){
-    return this.http.get(`https://super-market-abu-malk.herokuapp.com/passcheck`);
-
+  checkLogin(uname, pass) {
+    return this.http.get(
+      `${this.apiLink}/passcheck?uname=${uname}&pass=${pass}`
+    );
   }
-
 }

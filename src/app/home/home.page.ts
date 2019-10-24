@@ -6,7 +6,6 @@ import { IonInfiniteScroll } from '@ionic/angular';
 import { Record } from '../record';
 import { Observable } from 'rxjs';
 
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -16,12 +15,17 @@ export class HomePage implements OnInit {
   records;
   searchTerm;
   filteredRecords;
+  store;
   selectedUser = {
     Name: '',
     Id: 0
-  }
+  };
 
-  constructor(private data: DataService, private loading: LoadingController, private modalController: ModalController) {}
+  constructor(
+    private data: DataService,
+    private loading: LoadingController,
+    private modalController: ModalController
+  ) {}
   getFilterd() {
     console.log('search val ', this.searchTerm);
     console.log('records ', this.records);
@@ -33,7 +37,7 @@ export class HomePage implements OnInit {
   }
   getRecord() {
     return new Promise((resolve, rej) => {
-      return this.data.getRecords().subscribe(res => {
+      return this.data.getRecords(this.store.StoreID).subscribe(res => {
         console.log(res);
         this.filteredRecords = res;
         this.records = res;
@@ -44,15 +48,22 @@ export class HomePage implements OnInit {
 
   getData() {
     this.presentLoading('...جاري التحميل')
-    .then(async () => {
-      await this.getRecord();
-    })
-    .then(() => {
-      this.loading.dismiss();
-    });
+      .then(async () => {
+        await this.getRecord();
+      })
+      .then(() => {
+        this.loading.dismiss();
+      });
   }
   ngOnInit() {
-  this.getData();
+  
+    this.data.selectedStore.subscribe(s => {
+      console.log('store: ', s);
+      this.store = s;
+      this.getData();
+ 
+    });
+
   }
 
   async presentLoading(msg) {
@@ -70,5 +81,4 @@ export class HomePage implements OnInit {
     });
     return await modal.present();
   }
-
 }

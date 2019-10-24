@@ -1,12 +1,22 @@
+<div class="login-page">
+  <div>
 
-    <div class="login-page">
-      <img src="../../assets/AbuMalk.PNG">
-        <div class="form">
-     
-            <input type="text" [(ngModel)]="pass" placeholder="اسم المستخدم"/>
-            <input type="text" [(ngModel)]="uname" placeholder="كلمة المرور"/>
-            <button (click)="loginAttempt()">دخول</button>
-      
-        </div>
-      </div>
 
+    <img src="../../assets/HsabatLogo.png">
+  </div>
+  <div class="form">
+
+    <form (ngSubmit)="loginAttempt()">
+
+
+    <input type="text" name="uname" [(ngModel)]="uname" placeholder="اسم المستخدم" />
+    <input type="password" name="pass" [(ngModel)]="pass" placeholder="كلمة المرور" />
+    <button type="submit">دخول</button>
+  </form>
+  </div>
+  <div>
+    <code>
+      v2.0
+    </code>
+  </div>
+</div>

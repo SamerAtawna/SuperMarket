@@ -16,6 +16,7 @@ export class RecordPage implements OnInit {
   filteredRecords;
   searchEnabled = true;
   showInput = false;
+  store;
   sum = '';
   selectedUser = {
     _id: '',
@@ -28,6 +29,9 @@ export class RecordPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.data.selectedStore.subscribe(s=>{
+      this.store = s;
+    })
     this.presentLoading('يتم التحميل...').then(async () => {
       await this.getRecord();
       this.loading.dismiss();
@@ -44,7 +48,7 @@ export class RecordPage implements OnInit {
 
   getRecord() {
     return new Promise((resolve, rej) => {
-      return this.data.getRecords().subscribe(res => {
+      return this.data.getRecords(this.store.StoreID).subscribe(res => {
         this.records = res;
         this.filteredRecords = res;
         resolve();

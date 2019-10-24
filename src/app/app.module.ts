@@ -11,6 +11,7 @@ import { AppComponent } from './app.component';
 import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { DateonlyPipe } from './dateonly.pipe';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [AppComponent , DetailsModalComponent, DateonlyPipe],
@@ -20,7 +21,8 @@ import { DateonlyPipe } from './dateonly.pipe';
     BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule
   ],
   providers: [
     StatusBar,

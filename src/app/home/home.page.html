@@ -8,21 +8,34 @@
     </ion-title>
     <ion-icon slot="end" name="md-refresh" (click)="getData()"></ion-icon>
   </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar animated [(ngModel)]="searchTerm" (ionChange)="getFilterd()"></ion-searchbar>
+
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content>
-    <ion-searchbar
-    animated
-    [(ngModel)]="searchTerm"
-    (ionChange)="getFilterd()"
-  ></ion-searchbar>
+
+
   <ion-list *ngFor="let record of filteredRecords">
-    <ion-item (click)="presentModal(record.UserID, record.Name)">
-      <ion-label>{{record.Name}}</ion-label>
-      <p slot="end" *ngIf="record.Amount !== null">{{record.Amount | sumit}}</p>
-      <p slot="end" *ngIf="record.Amount === null">0</p>
-    </ion-item>
+    <ion-item-sliding side="end">
+      <ion-item (click)="presentModal(record.UserID, record.Name)">
+        <ion-label>
+          <ion-label style="float:right">{{record.Name}}</ion-label>
+          <p *ngIf="record.Amount !== null" style="float:left">{{record.Amount | sumit}}</p>
+          <p *ngIf="record.Amount === null" style="float:left">0</p>
+        </ion-label>
+      </ion-item>
+      <ion-item-options side="end" style="direction:ltr">
+        <ion-item-option color="primary">
+          <ion-icon slot="end" name="more"></ion-icon>
+          استلام مبلغ
+        </ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+
+
 
   </ion-list>
 </ion-content>

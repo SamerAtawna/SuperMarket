@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
   styleUrls: ['app.component.scss']
 })
 export class AppComponent {
-  imageUrl = '../assets/AbuMalk.PNG';
+  imageUrl = '../assets/HsabatLogo.png';
   public appPages = [
     {
       title: 'حسابات',

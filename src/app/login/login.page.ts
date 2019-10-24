@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, NgZone } from '@angular/core';
 import { DataService } from '../data.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Router } from '@angular/router';
 import { MenuController } from '@ionic/angular';
+import { resolve } from 'q';
 
 @Component({
   selector: 'app-login',
@@ -12,20 +13,24 @@ import { MenuController } from '@ionic/angular';
 export class LoginPage implements OnInit {
   pass;
   uname;
+
   constructor(
     private data: DataService,
     private loading: LoadingController,
     private alertController: AlertController,
     private router: Router,
     private menuCtrl: MenuController,
+    private zone: NgZone
   ) {}
 
   ngOnInit() {
-    if (localStorage.getItem('passcode') && !this.pass && localStorage.getItem('username')) {
-      this.pass = localStorage.getItem('passcode');
+    if (localStorage.getItem('password') && localStorage.getItem('username')) {
+      this.pass = localStorage.getItem('password');
+      this.uname = localStorage.getItem('username');
+      this.loginAttempt();
+
       console.log('from localstorage');
     }
-    this.loginAttempt();
   }
   checkPassCode() {
     return new Promise((res, rej) => {
@@ -42,27 +47,40 @@ export class LoginPage implements OnInit {
   }
   async presentAlert() {
     const alert = await this.alertController.create({
-      message: '<b>الرمز غير صحيح</b> <ion-icon name=md-error></ion-icon>',
-      buttons: ['موافق']
+      message: '<b>البيانات خاطئة</b> <ion-icon name=md-error></ion-icon>',
+      buttons: ['موافق'],
+      cssClass: 'alertArabic'
     });
 
     await alert.present();
   }
 
   loginAttempt() {
-    this.presentLoading('يتم التحقق...').then(async () => {
-      await this.checkPassCode().then(res => {
-        const remotePass = res[0].Pass;
-        if (this.pass === remotePass) {
-          localStorage.setItem('passcode', this.pass);
-          this.router.navigateByUrl('home');
-        } else {
-          this.presentAlert();
-        }
-        console.log(res);
+    if (!this.uname || !this.pass) {
+      return;
+    }
+    this.presentLoading('يتم التحقق...')
+      .then(async () => {
+        await this.checkPassCode().then((res: Array<any>) => {
+          console.log('res => ', res);
+          if(Array.isArray(res)){
+            
+          }
+          if ((res.length === 0) || res === null) {
+            this.presentAlert().then(() => {
+              this.loading.dismiss();
+            });
+          } else {
+            localStorage.setItem('username', res[0].StoreName);
+            localStorage.setItem('password', res[0].Password);
+            this.data.selectedStore.next(res[0]);
+            this.router.navigateByUrl('home');
+          }
+        });
+      })
+      .then(() => {
         this.loading.dismiss();
       });
-    });
   }
   ionViewWillEnter() {
     this.menuCtrl.enable(false);

@@ -1,11 +1,12 @@
-import { Component, OnInit } from "@angular/core";
+import { Component, OnInit, ViewEncapsulation } from "@angular/core";
 import { DataService } from "../data.service";
 import { LoadingController, AlertController } from "@ionic/angular";
 
 @Component({
   selector: "app-refund",
   templateUrl: "./refund.page.html",
-  styleUrls: ["./refund.page.scss"]
+  styleUrls: ["./refund.page.scss"],
+  encapsulation: ViewEncapsulation.None
 })
 export class RefundPage implements OnInit {
   searchTerm;
@@ -14,6 +15,7 @@ export class RefundPage implements OnInit {
   filteredRecords;
   searchEnabled = true;
   showInput = false;
+  store;
   selectedUser = {
     _id: "",
     Name: ""
@@ -25,6 +27,9 @@ export class RefundPage implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.data.selectedStore.subscribe(s => {
+      this.store = s;
+    });
     this.presentLoading("يتم التحميل...").then(async () => {
       await this.getRecord();
       this.loading.dismiss();
@@ -48,7 +53,7 @@ export class RefundPage implements OnInit {
   }
   getRecord() {
     return new Promise((resolve, rej) => {
-      return this.data.getRecords().subscribe(res => {
+      return this.data.getRecords(this.store.StoreID).subscribe(res => {
         this.records = res;
         this.filteredRecords = res;
         resolve();
@@ -63,8 +68,10 @@ export class RefundPage implements OnInit {
   }
 
   refundCust() {
-    console.log(this.amount)
-    if (this.amount === undefined ) {return}
+    console.log(this.amount);
+    if (this.amount === undefined) {
+      return;
+    }
     this.presentLoading("جاري الحفظ...").then(async () => {
       await this.data
         .refundCustomer(this.selectedUser._id, this.amount * -1)

@@ -6,17 +6,15 @@
     <ion-title>
       تسديد
     </ion-title>
+    <img src="../../assets/lg.png" slot="end" margin>
+  </ion-toolbar>
+  <ion-toolbar>
+    <ion-searchbar dir="rtl" animated [(ngModel)]="searchTerm" (ionChange)="getFilterd()"></ion-searchbar>
   </ion-toolbar>
 </ion-header>
 <ion-grid fixed>
   <ion-row>
     <ion-col size="12">
-      <ion-searchbar
-        dir="rtl"
-        animated
-        [(ngModel)]="searchTerm"
-        (ionChange)="getFilterd()"
-      ></ion-searchbar>
       <ion-card *ngIf="searchEnabled">
         <ion-card-content *ngFor="let item of filteredRecords" dir="rtl">
           <ion-item (click)="selectCustomer(item.UserID, item.Name)">
@@ -33,12 +31,7 @@
           <ion-card-title>{{ selectedUser.Name }}</ion-card-title>
         </ion-card-header>
         <ion-card-content class="ion-text-center">
-          <ion-input
-            type="text"
-            placeholder="0"
-            class="ion-text-center"
-            [(ngModel)]="amount"
-          ></ion-input>
+          <ion-input type="text" placeholder="0" class="ion-text-center" [(ngModel)]="amount"></ion-input>
           <ion-button (click)="refundCust()">
             موافق
           </ion-button>
