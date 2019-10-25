@@ -27,8 +27,8 @@ export class DataService {
     'Content-Type': 'application/json',
     'Access-Control-Allow-Headers': '*'
   });
-  // apiLink = 'https://super-market-abu-malk.herokuapp.com/customers';
-  apiLink = 'http://localhost:3000';
+  apiLink = 'https://super-market-abu-malk.herokuapp.com';
+  // apiLink = 'http://localhost:3000';
   constructor(private http: HttpClient) {}
 
   getRecords(storeId): Observable<Record> {
@@ -53,13 +53,19 @@ export class DataService {
     return this.http.get(`${this.apiLink}/userdetails?id=${id}`);
   }
 
-  newCustomer(name) {
-    return this.http.get(`${this.apiLink}/addcust?name=${name}`);
+  newCustomer(name, storeid) {
+    return this.http.get(`${this.apiLink}/addcust?name=${name}&storeid=${storeid}`);
   }
 
   checkLogin(uname, pass) {
     return this.http.get(
       `${this.apiLink}/passcheck?uname=${uname}&pass=${pass}`
+    );
+  }
+
+  getStats(id){
+    return this.http.get(
+      `${this.apiLink}/statis?id=${id}`
     );
   }
 }
