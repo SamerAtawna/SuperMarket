@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './auth.guard';
 
 const routes: Routes = [
   {
@@ -9,16 +10,24 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule)
+    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+    canLoad: [AuthGuard]
   },
   {
     path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule)
+    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule),
+    canLoad: [AuthGuard]
   },
-  { path: 'record', loadChildren: './record/record.module#RecordPageModule' },  { path: 'refund', loadChildren: './refund/refund.module#RefundPageModule' },
-  { path: 'newcustomer', loadChildren: './newcustomer/newcustomer.module#NewcustomerPageModule' },
+  { path: 'record', loadChildren: './record/record.module#RecordPageModule' ,
+  canLoad: [AuthGuard]},
+  { path: 'refund', loadChildren: './refund/refund.module#RefundPageModule',
+  canLoad: [AuthGuard] },
+  {
+    path: 'newcustomer',
+    loadChildren: './newcustomer/newcustomer.module#NewcustomerPageModule',
+    canLoad: [AuthGuard]
+  },
   { path: 'login', loadChildren: './login/login.module#LoginPageModule' }
-
 ];
 
 @NgModule({

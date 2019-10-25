@@ -12,6 +12,7 @@ import { Record } from './record';
   providedIn: 'root'
 })
 export class DataService {
+  isAuthenticated = false;
   obj: {
     Name: string;
     Id: number;

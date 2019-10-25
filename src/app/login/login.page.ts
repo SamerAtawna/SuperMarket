@@ -64,15 +64,16 @@ export class LoginPage implements OnInit {
         await this.checkPassCode().then((res: Array<any>) => {
           console.log('res => ', res);
           if(Array.isArray(res)){
-            
           }
           if ((res.length === 0) || res === null) {
             this.presentAlert().then(() => {
               this.loading.dismiss();
             });
           } else {
+            this.data.isAuthenticated = true;
             localStorage.setItem('username', res[0].StoreName);
             localStorage.setItem('password', res[0].Password);
+
             this.data.selectedStore.next(res[0]);
             this.router.navigateByUrl('home');
           }
