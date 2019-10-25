@@ -15,11 +15,14 @@ export class HomePage implements OnInit {
   records;
   searchTerm;
   filteredRecords;
+  showInput = false;
   store;
+  amount;
   selectedUser = {
     Name: '',
     Id: 0
   };
+
 
   constructor(
     private data: DataService,
@@ -81,4 +84,5 @@ export class HomePage implements OnInit {
     });
     return await modal.present();
   }
+
 }
