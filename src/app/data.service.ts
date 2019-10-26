@@ -16,6 +16,7 @@ export class DataService {
   obj: {
     Name: string;
     Id: number;
+    amount: string;
   };
   store: {
     Password: string;

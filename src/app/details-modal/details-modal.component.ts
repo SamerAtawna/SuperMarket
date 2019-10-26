@@ -1,10 +1,23 @@
-import { DataService } from './../data.service';
-import { Component, OnInit } from '@angular/core';
-import { ModalController, LoadingController, AlertController } from '@ionic/angular';
+import { DataService } from "./../data.service";
+import { Component, OnInit } from "@angular/core";
+import {
+  ModalController,
+  LoadingController,
+  AlertController
+} from "@ionic/angular";
+import { SMS } from "@ionic-native/sms/ngx";
+import {
+  Contacts,
+  Contact,
+  ContactField,
+  ContactName
+} from "@ionic-native/contacts/ngx";
+import { AndroidPermissions } from "@ionic-native/android-permissions/ngx";
+
 @Component({
-  selector: 'app-details-modal',
-  templateUrl: './details-modal.component.html',
-  styleUrls: ['./details-modal.component.scss']
+  selector: "app-details-modal",
+  templateUrl: "./details-modal.component.html",
+  styleUrls: ["./details-modal.component.scss"]
 })
 export class DetailsModalComponent implements OnInit {
   customer;
@@ -17,21 +30,27 @@ export class DetailsModalComponent implements OnInit {
   showInput = false;
   userDataArr2: Array<any> = [];
   isLoading = true;
+  contactSMS: { name: string; phoneNumber: string } = {
+    name: "",
+    phoneNumber: ""
+  };
   constructor(
     public data: DataService,
     private modalController: ModalController,
     private loading: LoadingController,
     private alertController: AlertController,
-
+    private sms: SMS,
+    private contacts: Contacts,
+    private permission: AndroidPermissions
   ) {}
 
   ngOnInit() {
     this.data.selectedCustObj.subscribe(d => {
       this.customer = d;
-      console.log('d:', d);
+      console.log("d:", d);
       this.data.getUserDetails(this.customer.Id).subscribe(dt => {
         this.userData = dt;
-        console.log('dt: ', dt);
+        console.log("dt: ", dt);
         this.userData.forEach(element => {
           this.userDataObj[element.Date] = [];
         });
@@ -45,7 +64,7 @@ export class DetailsModalComponent implements OnInit {
           };
           this.userDataArr2.push(Obj);
         });
-        console.log('userDataArr2', this.userDataArr2);
+        console.log("userDataArr2", this.userDataArr2);
         this.isLoading = false;
       });
     });
@@ -72,7 +91,7 @@ export class DetailsModalComponent implements OnInit {
       return;
     }
 
-    this.presentLoading('جاري الحفظ...').then(async () => {
+    this.presentLoading("جاري الحفظ...").then(async () => {
       await this.data
         .refundCustomer(this.customer.Id, this.amount * -1)
         .then(s => {
@@ -85,25 +104,66 @@ export class DetailsModalComponent implements OnInit {
     });
     //
   }
-  async presentAlert() {
+  async presentAlert(msg) {
     const alert = await this.alertController.create({
-      message: '<b>تم الحفظ</b> <ion-icon name=md-done-all></ion-icon>',
-      buttons: ['موافق']
+      message: msg,
+      buttons: ["موافق"]
     });
 
     await alert.present();
   }
   addToAccount() {
-    if (!this.sum) { return; }
+    if (!this.sum) {
+      return;
+    }
     console.log(this.customer.id);
-    this.presentLoading('يتم الحفظ').then(() => {
+    this.presentLoading("يتم الحفظ").then(() => {
       this.data.addTransaction(this.customer.Id, this.sum).subscribe(s => {
-        console.log('finished trans', s);
+        console.log("finished trans", s);
         this.loading.dismiss();
         if (s) {
-          this.presentAlert();
+          this.presentAlert("تم الحفظ");
         }
       });
     });
+  }
+
+  sendSMS() {
+    console.log(`السلام عليكم حسابك حتى اليوم ${this.customer.amount}`);
+    this.contacts
+      .pickContact()
+      .then(contact => {
+        console.log(contact);
+        console.log(contact.displayName);
+        console.log(contact.phoneNumbers[0].value);
+        console.log(this.contactSMS.name, this.contactSMS.phoneNumber);
+        this.contactSMS.name = contact.displayName;
+        this.contactSMS.phoneNumber = contact.phoneNumbers[0].value;
+      })
+      .then(() => {
+        console.log("ask permission sms");
+        this.permission
+          .checkPermission(this.permission.PERMISSION.SEND_SMS)
+          .then(res => {
+            console.log(res);
+          });
+        this.permission
+          .requestPermission(this.permission.PERMISSION.SEND_SMS)
+          .then(s => {
+            console.log(s);
+          });
+      })
+      .then(() => {
+        this.sms
+          .send(
+            this.contactSMS.phoneNumber,
+            `السلام عليكم حسابك حتى اليوم ${this.customer.amount}`
+          )
+          .then(res => {
+            if (res == "OK") {
+              this.presentAlert("تم الارسال");
+            }
+          });
+      });
   }
 }

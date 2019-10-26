@@ -20,7 +20,8 @@ export class HomePage implements OnInit {
   amount;
   selectedUser = {
     Name: '',
-    Id: 0
+    Id: 0,
+    amount: ''
   };
 
 
@@ -59,7 +60,6 @@ export class HomePage implements OnInit {
       });
   }
   ngOnInit() {
-  
     this.data.selectedStore.subscribe(s => {
       console.log('store: ', s);
       this.store = s;
@@ -75,9 +75,11 @@ export class HomePage implements OnInit {
     });
     await loading.present();
   }
-  async presentModal(id, name) {
+  async presentModal(id, name, amount) {
+    console.log("amount is", amount);
     this.selectedUser.Id = id;
     this.selectedUser.Name = name;
+    this.selectedUser.amount = amount;
     this.data.selectedCustObj.next(this.selectedUser);
     const modal = await this.modalController.create({
       component: DetailsModalComponent
