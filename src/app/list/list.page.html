@@ -10,15 +10,30 @@
 </ion-header>
 
 <ion-content>
-  <div style="display: block;">
-    <canvas baseChart width="400" height="400"
-      [datasets]="lineChartData"
-      [labels]="lineChartLabels"
-      [colors]="lineChartColors"
-      [legend]="lineChartLegend"
-      [chartType]="lineChartType"
-      [plugins]="lineChartPlugins">
-    </canvas>
+  <div class="stats">
+    <div class="canv">
+        <canvas baseChart width="400" height="400"
+        [datasets]="lineChartData"
+        [labels]="lineChartLabels"
+        [colors]="lineChartColors"
+        [legend]="lineChartLegend"
+        [chartType]="lineChartType"
+        [plugins]="lineChartPlugins">
+      </canvas>
+    </div>
+<div>
+<ion-card *ngIf="maxCustomer">
+  <ion-card-content>
+    <ion-card-title> <ion-icon name="arrow-up"></ion-icon>  اعلى حساب</ion-card-title>
+      <ion-card-content>
+     
+          <ion-label padding>{{maxCustomer[0].n}}</ion-label>
+          <ion-label padding>{{maxCustomer[0].mnt}} شيكل</ion-label>
+   
+      </ion-card-content>
+  </ion-card-content>
+</ion-card>
+</div>
   </div>
   
 </ion-content>

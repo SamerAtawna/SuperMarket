@@ -20,6 +20,8 @@ import {
   ContactName
 } from "@ionic-native/contacts/ngx";
 import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 @NgModule({
   declarations: [AppComponent, DetailsModalComponent, DateonlyPipe],
@@ -31,7 +33,8 @@ import { AndroidPermissions } from '@ionic-native/android-permissions/ngx';
     AppRoutingModule,
     HttpClientModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     StatusBar,

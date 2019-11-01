@@ -1,15 +1,15 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
 import {
   HttpClientModule,
   HttpClient,
   HttpHeaders
-} from '@angular/common/http';
-import { Observable, BehaviorSubject, Subject } from 'rxjs';
-import { map, filter, take } from 'rxjs/operators';
-import { Record } from './record';
+} from "@angular/common/http";
+import { Observable, BehaviorSubject, Subject } from "rxjs";
+import { map, filter, take } from "rxjs/operators";
+import { Record } from "./record";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class DataService {
   isAuthenticated = false;
@@ -26,15 +26,15 @@ export class DataService {
   selectedCustObj = new BehaviorSubject(this.obj);
   selectedStore = new BehaviorSubject(this.store);
   headers = new HttpHeaders({
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Headers': '*'
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Headers": "*"
   });
   apiLink = 'https://super-market-abu-malk.herokuapp.com';
-  // apiLink = 'http://localhost:3000';
+  // apiLink = "http://localhost:3000";
   constructor(private http: HttpClient) {}
 
   getRecords(storeId): Observable<Record> {
-    console.log("storeid:(service) ", storeId );
+    console.log("storeid:(service) ", storeId);
     return this.http.get<Record>(`${this.apiLink}/customers?id=${storeId}`);
   }
 
@@ -47,7 +47,7 @@ export class DataService {
   }
 
   async refundCustomer(id, sum) {
-    console.log('amount', sum);
+    console.log("amount", sum);
     return this.http.get(`${this.apiLink}/refund?sum=${sum}&id=${id}`);
   }
 
@@ -56,7 +56,9 @@ export class DataService {
   }
 
   newCustomer(name, storeid) {
-    return this.http.get(`${this.apiLink}/addcust?name=${name}&storeid=${storeid}`);
+    return this.http.get(
+      `${this.apiLink}/addcust?name=${name}&storeid=${storeid}`
+    );
   }
 
   checkLogin(uname, pass) {
@@ -65,9 +67,10 @@ export class DataService {
     );
   }
 
-  getStats(id){
-    return this.http.get(
-      `${this.apiLink}/statis?id=${id}`
-    );
+  getStats(id) {
+    return this.http.get(`${this.apiLink}/statis?id=${id}`);
+  }
+  getMoreStats(): Observable<any> {
+    return this.http.get(`${this.apiLink}/statistwo`);
   }
 }

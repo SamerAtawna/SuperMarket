@@ -10,18 +10,26 @@ const routes: Routes = [
   },
   {
     path: 'home',
-    loadChildren: () => import('./home/home.module').then(m => m.HomePageModule),
+    loadChildren: () =>
+      import('./home/home.module').then(m => m.HomePageModule),
     canLoad: [AuthGuard]
   },
   {
     path: 'list',
-    loadChildren: () => import('./list/list.module').then(m => m.ListPageModule),
+    loadChildren: () =>
+      import('./list/list.module').then(m => m.ListPageModule),
     canLoad: [AuthGuard]
   },
-  { path: 'record', loadChildren: './record/record.module#RecordPageModule' ,
-  canLoad: [AuthGuard]},
-  { path: 'refund', loadChildren: './refund/refund.module#RefundPageModule',
-  canLoad: [AuthGuard] },
+  {
+    path: 'record',
+    loadChildren: './record/record.module#RecordPageModule',
+    canLoad: [AuthGuard]
+  },
+  {
+    path: 'refund',
+    loadChildren: './refund/refund.module#RefundPageModule',
+    canLoad: [AuthGuard]
+  },
   {
     path: 'newcustomer',
     loadChildren: './newcustomer/newcustomer.module#NewcustomerPageModule',
